@@ -16,6 +16,7 @@ namespace MVC.Models
             Property(g => g.Gender).IsRequired();
             Property(g => g.Description).IsRequired();
             Property(g => g.Price).IsRequired();
+            Property(g => g.ImageName).IsRequired();
         }
     }
 }

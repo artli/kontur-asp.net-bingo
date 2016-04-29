@@ -1,3 +1,11 @@
 ﻿@model MVC.Models.Character
 
-<p>(id=@Model.CharacterID, name=@Model.Name, gender=@Model.Gender.ToString(), description=@Model.Description, price=@Model.Price)</p>
+<div class="character-card" id="@("characterCard" + Model.CharacterID)">
+    <div class="character-image"><img src="@("/Content/img/" + @Model.ImageName)" alt="@Model.Name" /></div>
+    <div class="character-description">
+        <p><b>Name</b>: @Model.Name</p>
+        <p><b>Gender</b>: @Model.Gender.ToString()</p>
+        <p><b>Description</b>: @Model.Description</p>
+        <p><b>Price</b>: @Model.Price</p>
+    </div>
+</div>

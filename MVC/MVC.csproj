@@ -155,6 +155,10 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\img\Daenerys-MothersMercy.jpg" />
+    <Content Include="Content\img\Doran_Martell_Prince_of_Dorne.jpg" />
+    <Content Include="Content\img\Mlisandre_Season_6.jpg" />
+    <Content Include="Content\img\MyrcellaS5Cropped.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
