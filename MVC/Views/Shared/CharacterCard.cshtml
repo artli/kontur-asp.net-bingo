@@ -1,11 +1,13 @@
 ﻿@model MVC.Models.Character
 
 <div class="character-card" id="@("characterCard" + Model.CharacterID)">
-    <div class="character-image"><img src="@("/Content/img/" + @Model.ImageName)" alt="@Model.Name" /></div>
-    <div class="character-description">
-        <p><b>Name</b>: @Model.Name</p>
-        <p><b>Gender</b>: @Model.Gender.ToString()</p>
-        <p><b>Description</b>: @Model.Description</p>
-        <p><b>Price</b>: @Model.Price</p>
+    <div class="character-wrapper">
+        <div class="character-image"><img src="@("/Content/img/" + @Model.ImageName)" alt="@Model.Name" /></div>
+        <div class="character-description">
+            <p><b>Name</b>: @Model.Name</p>
+            <p><b>Gender</b>: @Model.Gender.ToString()</p>
+            <p><b>Description</b>: @Model.Description</p>
+            <p><b>Price</b>: @Model.Price</p>
+        </div>
     </div>
 </div>

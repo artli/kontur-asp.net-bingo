@@ -11,7 +11,8 @@ namespace MVC.Services
     public interface ICharacterService
     {
         IEnumerable<Character> GetAllCharacters();
-        IEnumerable<Character> GetFiteredCharacters(Func<Character, bool> predicate);
+        IEnumerable<Character> GetFilteredCharacters(Func<Character, bool> predicate);
+        IEnumerable<Character> GetFilteredCharacters(Gender? gender = null, int? minPrice = null, int? maxPrice = null, string name = null);
         IEnumerable<Character> GetCharactersByGender(Gender gender);
         IEnumerable<Character> GetCharactersByPriceRange(int minPrice, int maxPrice);
         Character GetCharacterByCharacterID(int id);
@@ -38,19 +39,33 @@ namespace MVC.Services
             return CharacterRepository.GetAll();
         }
 
-        public IEnumerable<Character> GetFiteredCharacters(Func<Character, bool> predicate)
+        public IEnumerable<Character> GetFilteredCharacters(Func<Character, bool> predicate)
         {
             return CharacterRepository.GetAll().Where(predicate);
         }
         
         public IEnumerable<Character> GetCharactersByGender(Gender gender)
         {
-            return GetFiteredCharacters(c => c.Gender == gender);
+            return GetFilteredCharacters(c => c.Gender == gender);
         }
 
         public IEnumerable<Character> GetCharactersByPriceRange(int minPrice, int maxPrice)
         {
-            return GetFiteredCharacters(c => c.Price <= maxPrice && c.Price >= minPrice);
+            return GetFilteredCharacters(c => c.Price <= maxPrice && c.Price >= minPrice);
+        }
+
+        public IEnumerable<Character> GetFilteredCharacters(Gender? gender = null, int? minPrice = null, int? maxPrice = null, string name = null)
+        {
+            var characters = GetAllCharacters();
+            if (gender.HasValue)
+                characters = characters.Where(c => c.Gender == gender);
+            if (minPrice.HasValue)
+                characters = characters.Where(c => c.Price >= minPrice);
+            if (maxPrice.HasValue)
+                characters = characters.Where(c => c.Price <= maxPrice);
+            if (name != null)
+                characters = characters.Where(c => c.Name.ToLowerInvariant().Contains(name.ToLowerInvariant()));
+            return characters;
         }
 
         public Character GetCharacterByCharacterID(int id)
