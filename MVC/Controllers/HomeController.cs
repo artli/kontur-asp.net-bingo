@@ -1,4 +1,7 @@
-﻿using System;
+﻿using MVC.Infrastructure;
+using MVC.Repositories;
+using MVC.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,23 +11,16 @@ namespace MVC.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ICharacterService characterService;
+
+        public HomeController(ICharacterService characterService)
+        {
+            this.characterService = characterService;
+        }
+
         public ActionResult Index()
         {
-            return View();
-        }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            return View(characterService.GetAllCharacters().ToArray());
         }
     }
 }
