@@ -14,20 +14,20 @@ namespace MVC
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-                name: "Show all characters",
-                url: "Characters/",
-                defaults: new { controller = "Characters", action = "List", id = UrlParameter.Optional }
-            );
-
-            routes.MapRoute(
-                name: "Filter by gender",
+                name: "Filter characters by gender",
                 url: "Characters/ByGender/{gender}",
                 defaults: new { controller = "Characters", action = "List", id = UrlParameter.Optional }
             );
 
             routes.MapRoute(
-                name: "Filter by price range",
+                name: "Filter characters by price range",
                 url: "Characters/ByPrice/{minPrice}-{maxPrice}",
+                defaults: new { controller = "Characters", action = "List", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "Show all characters",
+                url: "Characters/",
                 defaults: new { controller = "Characters", action = "List", id = UrlParameter.Optional }
             );
 
