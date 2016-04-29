@@ -1,8 +1,10 @@
 ﻿@model MVC.Models.Character[]
 
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Character list";
 }
+
+<h1>@ViewBag.FilteringTitle</h1>
 
 @foreach (var character in Model)
 {

@@ -11,6 +11,9 @@ namespace MVC.Services
     public interface ICharacterService
     {
         IEnumerable<Character> GetAllCharacters();
+        IEnumerable<Character> GetFiteredCharacters(Func<Character, bool> predicate);
+        IEnumerable<Character> GetCharactersByGender(Gender gender);
+        IEnumerable<Character> GetCharactersByPriceRange(int minPrice, int maxPrice);
         Character GetCharacterByCharacterID(int id);
         Character GetCharacterByName(string Name);
         void CreateCharacter(Character Character);
@@ -33,6 +36,21 @@ namespace MVC.Services
         public IEnumerable<Character> GetAllCharacters()
         {
             return CharacterRepository.GetAll();
+        }
+
+        public IEnumerable<Character> GetFiteredCharacters(Func<Character, bool> predicate)
+        {
+            return CharacterRepository.GetAll().Where(predicate);
+        }
+        
+        public IEnumerable<Character> GetCharactersByGender(Gender gender)
+        {
+            return GetFiteredCharacters(c => c.Gender == gender);
+        }
+
+        public IEnumerable<Character> GetCharactersByPriceRange(int minPrice, int maxPrice)
+        {
+            return GetFiteredCharacters(c => c.Price <= maxPrice && c.Price >= minPrice);
         }
 
         public Character GetCharacterByCharacterID(int id)
