@@ -58,5 +58,22 @@ namespace MVC.Tests
             charactersController.Vote(0);
             Assert.IsTrue(cart.PointsRemaining == 5);
         }
+
+        [TestMethod]
+        public void PointsAreAddedOnUnvoting()
+        {
+            cart.ChosenCharacterIds.Add(0);
+            charactersController.Vote(0);
+            Assert.IsTrue(cart.PointsRemaining == 15);
+        }
+
+        [TestMethod]
+        public void VotingDoesntHappenWhenNotEnoughPoints()
+        {
+            cart.PointsRemaining = 4;
+            charactersController.Vote(0);
+            Assert.IsTrue(cart.PointsRemaining == 4);
+            Assert.IsTrue(cart.ChosenCharacterIds.Count == 0);
+        }
     }
 }
