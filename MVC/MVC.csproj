@@ -144,12 +144,8 @@
     <Compile Include="Infrastructure\UnitOfWork.cs" />
     <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\Character.cs" />
-    <Compile Include="Models\CharacterConfiguration.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Vote.cs" />
-    <Compile Include="Models\UserConfiguration.cs" />
-    <Compile Include="Models\VoteItemConfiguration.cs" />
-    <Compile Include="Models\VoteConfiguration.cs" />
     <Compile Include="Models\VoteItem.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Services\ICartProvider.cs" />

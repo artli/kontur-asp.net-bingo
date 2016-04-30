@@ -9,7 +9,7 @@ namespace MVC.Repositories
 {
     public class BingoDbContext : DbContext
     {
-        public BingoDbContext() : base("GoTBigoDatabase") { }
+        public BingoDbContext() : base("GoTBingoDatabase") { }
 
         public DbSet<Character> Characters { get; set; }
         public DbSet<User> Users { get; set; }
@@ -19,14 +19,6 @@ namespace MVC.Repositories
         public virtual void Commit()
         {
             base.SaveChanges();
-        }
-
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Configurations.Add(new CharacterConfiguration());
-            modelBuilder.Configurations.Add(new UserConfiguration());
-            modelBuilder.Configurations.Add(new VoteConfiguration());
-            modelBuilder.Configurations.Add(new VoteItemConfiguration());
         }
     }
 }

@@ -72,7 +72,8 @@ namespace MVC.Infrastructure
         {
             var vote = new Vote {
                 VoteID = 0,
-                Week = "2016-10"
+                Week = "2016-10",
+                User = users[0]
             };
             var voteItems = new List<VoteItem>
             {
@@ -81,7 +82,7 @@ namespace MVC.Infrastructure
                     VoteItemID = 0,
                     Character = characters[0],
                     Position = 1,
-                    Vote = vote
+                    Vote = vote,
                 },
                 new VoteItem
                 {
@@ -92,6 +93,7 @@ namespace MVC.Infrastructure
                 }
             };
             vote.Items = voteItems;
+            user.Votes = new List<Vote> { vote };
             return new List<Vote> { vote };
         }
     }
