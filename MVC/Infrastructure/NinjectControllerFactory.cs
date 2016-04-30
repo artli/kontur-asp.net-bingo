@@ -30,8 +30,13 @@ namespace MVC.Infrastructure
         {
             ninjectKernel.Bind<IDbFactory>().To<DbFactory>();
             ninjectKernel.Bind<IUnitOfWork>().To<UnitOfWork>();
-            ninjectKernel.Bind<ICharacterService>().To<CharacterService>();
+
             ninjectKernel.Bind<ICharacterRepository>().To<CharacterRepository>();
+            ninjectKernel.Bind<IUserRepository>().To<UserRepository>();
+
+            ninjectKernel.Bind<ICharacterService>().To<CharacterService>();
+            ninjectKernel.Bind<IUserService>().To<UserService>();
+
             ninjectKernel.Bind<ICartProvider>().To<SessionCartProvider>();
         }
     }

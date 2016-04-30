@@ -23,12 +23,12 @@ namespace MVC.Services
 
     public class CharacterService : ICharacterService
     {
-        private readonly ICharacterRepository CharacterRepository;
+        private readonly ICharacterRepository characterRepository;
         private readonly IUnitOfWork unitOfWork;
 
-        public CharacterService(ICharacterRepository CharacterRepository, IUnitOfWork unitOfWork)
+        public CharacterService(ICharacterRepository characterRepository, IUnitOfWork unitOfWork)
         {
-            this.CharacterRepository = CharacterRepository;
+            this.characterRepository = characterRepository;
             this.unitOfWork = unitOfWork;
         }
 
@@ -36,12 +36,12 @@ namespace MVC.Services
 
         public IEnumerable<Character> GetAllCharacters()
         {
-            return CharacterRepository.GetAll();
+            return characterRepository.GetAll();
         }
 
         public IEnumerable<Character> GetFilteredCharacters(Func<Character, bool> predicate)
         {
-            return CharacterRepository.GetAll().Where(predicate);
+            return characterRepository.GetAll().Where(predicate);
         }
         
         public IEnumerable<Character> GetCharactersByGender(Gender gender)
@@ -70,17 +70,17 @@ namespace MVC.Services
 
         public Character GetCharacterByCharacterID(int id)
         {
-            return CharacterRepository.GetById(id);
+            return characterRepository.GetById(id);
         }
 
-        public Character GetCharacterByName(string Name)
+        public Character GetCharacterByName(string name)
         {
-            return CharacterRepository.Get(c => c.Name == Name);
+            return characterRepository.Get(c => c.Name == name);
         }
 
         public void CreateCharacter(Character Character)
         {
-            CharacterRepository.Add(Character);
+            characterRepository.Add(Character);
         }
 
         public void Commit()
