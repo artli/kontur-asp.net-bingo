@@ -22,7 +22,7 @@ namespace MVC.Controllers
             this.cartProvider = cartProvider;
         }
 
-        private Cart Cart
+        private Cart CurrentCart
         {
             get { return cartProvider.Cart; }
         }
@@ -44,38 +44,52 @@ namespace MVC.Controllers
             ViewBag.ListTitle = listTitle;
 
             var characters = characterService.GetFilteredCharacters(gender: gender, minPrice: minPrice, maxPrice: maxPrice, name: name);
-            var charactersWithState = characters.Select(c => new CharacterWithState(c, Cart));
+            var charactersWithState = characters.Select(c => new CharacterWithState(c, CurrentCart));
 
-            return View(new CharacterListViewModel { Characters = charactersWithState, Cart = Cart });
+            return View(new CharacterListViewModel { Characters = charactersWithState, Cart = CurrentCart });
         }
 
-        public ActionResult Vote(int? characterID)
+        public ActionResult Cart()
         {
-            if (characterID.HasValue)
-            {
-                var id = characterID.Value;
-                var character = characterService.GetCharacterByCharacterID(id);
-                if (character == null)
-                    ModelState.AddModelError("MVC.Models.Character", "Unable to find the characted with CharacterID=" + characterID.ToString());
-                else if (!Cart.ChosenCharacterIds.Contains(id))
-                {
-                    if (Cart.PointsRemaining < character.Price)
-                        ModelState.AddModelError("MVC.Models.Character", "You don't have enough points to vote for this character");
-                    else
-                    {
-                        Cart.ChosenCharacterIds.Add(id);
-                        Cart.PointsRemaining -= character.Price;
-                    }
-                }
-                else
-                {
-                    Cart.ChosenCharacterIds.Remove(id);
-                    Cart.PointsRemaining += character.Price;
-                }
-            }
-
-            var chosenCharacters = Cart.ChosenCharacterIds.Select(characterService.GetCharacterByCharacterID).Select(c => new CharacterWithState(c, Cart));
+            var chosenCharacters = CurrentCart.ChosenCharacterIds.Select(characterService.GetCharacterByCharacterID).Select(c => new CharacterWithState(c, CurrentCart));
             return View(chosenCharacters);
         }
+        public ActionResult Vote(int characterId)
+        {
+            VoteUnVote(characterId,true);
+
+            return RedirectToAction("Cart");
+        }
+
+        public ActionResult UnVote(int characterId)
+        {
+            VoteUnVote(characterId, false);
+            return RedirectToAction("Cart");
+        }
+        private void VoteUnVote(int characterId, Boolean IsVote)
+        {
+            var character = characterService.GetCharacterByCharacterID(characterId);
+            if (character == null)
+                ModelState.AddModelError("MVC.Models.Characters",
+                    "Unable to find the characted with CharacterID=" + characterId.ToString());
+            else if (!CurrentCart.ChosenCharacterIds.Contains(characterId) && IsVote)
+            {
+                if (CurrentCart.PointsRemaining < character.Price)
+                    ModelState.AddModelError("MVC.Models.Character", "You don't have enough points to vote for this character");
+                else
+                {
+                    CurrentCart.ChosenCharacterIds.Add(characterId);
+                    CurrentCart.PointsRemaining -= character.Price;
+                }
+            }
+            else if (!IsVote)
+            {
+                CurrentCart.ChosenCharacterIds.Remove(characterId);
+                CurrentCart.PointsRemaining += character.Price;
+            }
+        }
+
+        
+
     }
 }

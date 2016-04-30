@@ -206,7 +206,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Characters\List.cshtml" />
     <Content Include="Views\Shared\CharacterCard.cshtml" />
-    <Content Include="Views\Characters\Vote.cshtml" />
+    <Content Include="Views\Characters\Cart.cshtml" />
     <Content Include="Views\Shared\SearchForm.cshtml" />
   </ItemGroup>
   <ItemGroup>

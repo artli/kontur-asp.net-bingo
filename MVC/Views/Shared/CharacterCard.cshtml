@@ -1,5 +1,15 @@
 ﻿@model CharacterWithState
+@{
+    string submitLabel = "Vote";
+    string actionName = "Vote";
+    if (Model.State.AlreadyVotedFor )
+    {
+        submitLabel = "Cancel vote";
+        actionName = "UnVote";
+    }
 
+
+}
 <div class="character-card" id="@("characterCard" + Model.Character.CharacterID)">
     <div class="character-wrapper">
         <div class="character-image"><img src="@("/Content/img/" + @Model.Character.ImageName)" alt="@Model.Character.Name" /></div>
@@ -12,10 +22,10 @@
         <div class="character-cart-form">
             @if (Model.State.Affordable || Model.State.AlreadyVotedFor)
             {
-                using (Html.BeginForm("Vote", "Characters"))
-                {   
-                    <input name="characterID" value="@Model.Character.CharacterID" type="hidden"/>
-                    string submitLabel = (!Model.State.AlreadyVotedFor && Model.State.Affordable) ? "Vote" : "Cancel vote";
+                using (Html.BeginForm(actionName, "Characters"))
+                {
+                    <input name="characterID" value="@Model.Character.CharacterID" type="hidden" />
+
                     <input type="Submit" value="@submitLabel">
                 }
             }
