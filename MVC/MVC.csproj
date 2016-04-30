@@ -142,8 +142,13 @@
     <Compile Include="Infrastructure\NinjectControllerFactory.cs" />
     <Compile Include="Infrastructure\SeedData.cs" />
     <Compile Include="Infrastructure\UnitOfWork.cs" />
+    <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\Character.cs" />
     <Compile Include="Models\CharacterConfiguration.cs" />
+    <Compile Include="Services\ICartProvider.cs" />
+    <Compile Include="Services\SessionCardProvider.cs" />
+    <Compile Include="ViewModels\CharacterState.cs" />
+    <Compile Include="ViewModels\CharacterWithState.cs" />
     <Compile Include="Models\Gender.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Infrastructure\BingoDbContext.cs" />
@@ -151,6 +156,7 @@
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Repositories\RepositoryBase.cs" />
     <Compile Include="Services\CharacterService.cs" />
+    <Compile Include="ViewModels\CharacterListViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -190,6 +196,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Characters\List.cshtml" />
     <Content Include="Views\Shared\CharacterCard.cshtml" />
+    <Content Include="Views\Characters\Vote.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

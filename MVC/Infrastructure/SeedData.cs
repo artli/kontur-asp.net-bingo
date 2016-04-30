@@ -40,7 +40,7 @@ namespace MVC.Infrastructure
                     Name = "Myrcella Baratheon",
                     Gender = Gender.Female,
                     Description = "Princess Myrcella Baratheon is commonly thought to be the only daughter of King Robert Baratheon and Queen Cersei Lannister. However, like her siblings, her real father is Jaime Lannister.",
-                    Price = 4,
+                    Price = 3,
                     ImageName = "MyrcellaS5Cropped.jpg"
                 },
                 new Character {

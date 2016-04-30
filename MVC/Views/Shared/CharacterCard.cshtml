@@ -1,13 +1,24 @@
-﻿@model MVC.Models.Character
+﻿@model CharacterWithState
 
-<div class="character-card" id="@("characterCard" + Model.CharacterID)">
+<div class="character-card" id="@("characterCard" + Model.Character.CharacterID)">
     <div class="character-wrapper">
-        <div class="character-image"><img src="@("/Content/img/" + @Model.ImageName)" alt="@Model.Name" /></div>
+        <div class="character-image"><img src="@("/Content/img/" + @Model.Character.ImageName)" alt="@Model.Character.Name" /></div>
         <div class="character-description">
-            <p><b>Name</b>: @Model.Name</p>
-            <p><b>Gender</b>: @Model.Gender.ToString()</p>
-            <p><b>Description</b>: @Model.Description</p>
-            <p><b>Price</b>: @Model.Price</p>
+            <p><b>Name</b>: @Model.Character.Name</p>
+            <p><b>Gender</b>: @Model.Character.Gender.ToString()</p>
+            <p><b>Description</b>: @Model.Character.Description</p>
+            <p><b>Price</b>: @Model.Character.Price</p>
+        </div>
+        <div class="character-cart-form">
+            @if (Model.State.Affordable || Model.State.AlreadyVotedFor)
+            {
+                using (Html.BeginForm("Vote", "Characters"))
+                {
+                    @Html.HiddenFor(m => m.Character.CharacterID);
+                    string submitLabel = (!Model.State.AlreadyVotedFor && Model.State.Affordable) ? "Vote" : "Cancel vote";
+                    <input type="Submit" value="@submitLabel">
+                }
+            }
         </div>
     </div>
 </div>

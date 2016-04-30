@@ -32,6 +32,7 @@ namespace MVC.Infrastructure
             ninjectKernel.Bind<IUnitOfWork>().To<UnitOfWork>();
             ninjectKernel.Bind<ICharacterService>().To<CharacterService>();
             ninjectKernel.Bind<ICharacterRepository>().To<CharacterRepository>();
+            ninjectKernel.Bind<ICartProvider>().To<SessionCartProvider>();
         }
     }
 }

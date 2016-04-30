@@ -1,0 +1,15 @@
+﻿@model IEnumerable<CharacterWithState>
+@{
+    ViewBag.Title = "Chosen characters";
+}
+
+@Html.ValidationSummary()
+
+<h3>Characters you have voted for:</h3>
+
+@foreach (var character in Model)
+{
+    @Html.Partial("CharacterCard", character);
+}
+
+<p>@Html.ActionLink("Back to voting", "List")</p>

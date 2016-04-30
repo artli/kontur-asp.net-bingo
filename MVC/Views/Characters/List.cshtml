@@ -1,12 +1,14 @@
-﻿@model IEnumerable<MVC.Models.Character>
+﻿@model CharacterListViewModel
 
 @{
     ViewBag.Title = "Character list";
 }
 
+<h3>You have @Model.Cart.PointsRemaining points remaining to vote for characters.</h3>
+
 <h1>@ViewBag.ListTitle</h1>
 
-@foreach (var character in Model)
+@foreach (var character in Model.Characters)
 {
     @Html.Partial("CharacterCard", character);
 }
