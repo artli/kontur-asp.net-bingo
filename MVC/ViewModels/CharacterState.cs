@@ -10,13 +10,5 @@ namespace MVC.ViewModels
     {
         public bool Affordable { get; set; }
         public bool AlreadyVotedFor { get; set; }
-
-        public CharacterState() { }
-
-        public CharacterState(Character character, Cart cart)
-        {
-            Affordable = character.Price <= cart.PointsRemaining;
-            AlreadyVotedFor = cart.ChosenCharacterIDs.Contains(character.CharacterID);
-        }
     }
 }

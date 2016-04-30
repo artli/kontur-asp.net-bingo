@@ -43,20 +43,59 @@ namespace MVC.Controllers
             get { return weekProvider.GetCurrentWeekID(); }
         }
 
+        private User CurrentUser { get { return _authenticationService.CurrentUser; } }
+
+        private Vote MaxVote(IEnumerable<Vote> votes)
+        {
+            Vote result = null;
+            foreach (var vote in votes)
+            {
+                if (result == null || String.CompareOrdinal(vote.Week, result.Week) > 0)
+                    result = vote;
+            }
+            return result;
+        }
+
         private bool CurrentUserHasSavedVotes()
         {
             bool userHasSavedVotes = false;
-            var user = _authenticationService.CurrentUser;
-            if (user != null && user.Votes.Count != 0)
+            if (CurrentUser != null && CurrentUser.Votes.Count != 0)
             {
-                var maxVote = user.Votes.First();
-                foreach (var vote in user.Votes.Skip(1))
-                    if (String.CompareOrdinal(vote.Week, maxVote.Week) > 0)
-                        maxVote = vote;
+                var maxVote = MaxVote(CurrentUser.Votes);
                 if (maxVote.Week == CurrentWeek)
                     userHasSavedVotes = true;
             }
             return userHasSavedVotes;
+        }
+
+        private CharacterState GetCharacterState(Character character)
+        {
+            return new CharacterState
+            {
+                Affordable = character.Price <= CurrentCart.PointsRemaining,
+                AlreadyVotedFor = CurrentUserHasVotedForCharacter(character)
+            };
+        }
+
+        private CharacterWithState GetCharacterWithState(Character character)
+        {
+            return new CharacterWithState { Character = character, State = GetCharacterState(character) };
+        }
+
+        private bool CurrentUserHasVotedForCharacter(Character character)
+        {
+            if (CurrentCart.ChosenCharacterIDs.Contains(character.CharacterID))
+                return true;
+
+            var maxVote = MaxVote(CurrentUser.Votes);
+            if (maxVote.Week == CurrentWeek)
+            {
+                foreach (var voteItem in maxVote.Items)
+                    if (voteItem.Character.CharacterID == character.CharacterID)
+                        return true;
+            }
+
+            return false;
         }
 
         public ActionResult List(Gender? gender, int? minPrice, int? maxPrice, string name)
@@ -77,7 +116,7 @@ namespace MVC.Controllers
 
             var userHasSavedVotes = CurrentUserHasSavedVotes();
             var characters = characterService.GetFilteredCharacters(gender: gender, minPrice: minPrice, maxPrice: maxPrice, name: name);
-            var charactersWithState = characters.Select(c => new CharacterWithState(c, CurrentCart));
+            var charactersWithState = characters.Select(c => GetCharacterWithState(c));
 
             return View(new CharacterListViewModel { Characters = charactersWithState, Cart = CurrentCart, UserHasSavedVotes = userHasSavedVotes });
         }
@@ -87,7 +126,7 @@ namespace MVC.Controllers
             var userHasSavedVotes = CurrentUserHasSavedVotes();
             var chosenCharacters = CurrentCart.ChosenCharacterIDs
                 .Select(characterService.GetCharacterByCharacterID)
-                .Select(c => new CharacterWithState(c, CurrentCart));
+                .Select(c => GetCharacterWithState(c));
             var model = new CartViewModel { Characters = chosenCharacters, UserHasSavedVotes = userHasSavedVotes };
             return View(model);
         }
@@ -129,15 +168,14 @@ namespace MVC.Controllers
         [Authenticated]
         public ActionResult SecretPage()
         {
-            return View(_authenticationService.CurrentUser);
+            return View(CurrentUser);
         }
 
         public ActionResult SaveVotes()
         {
-            var user = _authenticationService.CurrentUser;
-            if (user == null)
+            if (CurrentUser == null)
                 return RedirectToAction("Login", "Account");
-            if (user.Votes.Any(v => v.Week == CurrentWeek))
+            if (CurrentUser.Votes.Any(v => v.Week == CurrentWeek))
             {
                 ModelState.AddModelError("MVC.Model.Vote", "You have already voted this week; vote cancelled");
                 return RedirectToAction("List");
@@ -145,7 +183,7 @@ namespace MVC.Controllers
 
             var vote = new Vote
             {
-                User = user,
+                User = CurrentUser,
                 Week = CurrentWeek,
                 Items = new List<VoteItem>()
             };

@@ -10,13 +10,5 @@ namespace MVC.ViewModels
     {
         public Character Character { get; set; }
         public CharacterState State { get; set; }
-
-        public CharacterWithState() { }
-
-        public CharacterWithState(Character character, Cart cart)
-        {
-            Character = character;
-            State = new CharacterState(character, cart);
-        }
     }
 }

@@ -18,9 +18,7 @@ namespace MVC.Repositories
 
         public virtual void Commit()
         {
-
             base.SaveChanges();
-
         }
     }
 }
