@@ -197,6 +197,7 @@
     <Content Include="Views\Characters\List.cshtml" />
     <Content Include="Views\Shared\CharacterCard.cshtml" />
     <Content Include="Views\Characters\Vote.cshtml" />
+    <Content Include="Views\Shared\SearchForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
