@@ -1,12 +1,15 @@
-﻿<div class="character-search-form">
+﻿@using MVC.Stuff
+<div class="character-search-form">
     <p><h3>Search for characters:</h3></p>
     @using (Html.BeginRouteForm("Show all characters"))
     {
         <p>
-            <b>Gender</b>: @Html.DropDownList("gender", new[] {
+            <b>Gender</b>:@Html.EnumDropDownList("gender",Gender.Female,"Any",null,null)
+            
+            @*@Html.DropDownList("gender", new[] {
                          new SelectListItem { Text = "Any", Value = null, Selected = true },
                          new SelectListItem { Text = "Male", Value = "Male", Selected = false },
-                         new SelectListItem { Text = "Female", Value = "Female", Selected = false }})
+                         new SelectListItem { Text = "Female", Value = "Female", Selected = false }})*@
         </p>
                         <p><b>Minimal price</b>: @Html.TextBox("minPrice")</p>
                         <p><b>Maximal price</b>: @Html.TextBox("maxPrice")</p>
