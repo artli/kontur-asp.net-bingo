@@ -27,6 +27,7 @@ namespace MVC.Infrastructure
                 ? null
                 : (IController)ninjectKernel.Get(controllerType);
         }
+
         private void AddBindings()
         {
             ninjectKernel.Bind<IDbFactory>().To<DbFactory>();

@@ -16,9 +16,8 @@ namespace MVC.Models
         public string LoginName { get; set; }
         [Required]
         public Byte[] PwdHash { get; set; }
-        [Required]
-        public ICollection<Vote> Votes { get; set; }
-
         public UserRole Role { get; set; }
+        [Required]
+        public virtual ICollection<Vote> Votes { get; set; }
     }
 }

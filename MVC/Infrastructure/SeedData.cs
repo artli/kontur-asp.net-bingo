@@ -56,9 +56,10 @@ namespace MVC.Infrastructure
 
         protected override void Seed(BingoDbContext context)
         {
+            var votes = GetVotes(users[0]);
             characters.ForEach(c => context.Characters.Add(c));
             users.ForEach(u => context.Users.Add(u));
-            foreach (var vote in GetVotes(users[0]))
+            foreach (var vote in votes)
             {
                 context.Votes.Add(vote);
                 foreach (var voteItem in vote.Items)

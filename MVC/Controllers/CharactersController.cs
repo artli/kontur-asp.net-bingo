@@ -9,17 +9,20 @@ using System.Web.Mvc;
 using MVC.Identity;
 using MVC.Models;
 using MVC.ViewModels;
+using System.Web.Security;
 
 namespace MVC.Controllers
 {
     public class CharactersController : Controller
     {
+        private readonly IUserService userService;
         private readonly ICharacterService characterService;
         private readonly ICartProvider cartProvider;
         private readonly IAuthenticationService _authenticationService;
-
-        public CharactersController(ICharacterService characterService, ICartProvider cartProvider, IAuthenticationService authenticationService)
+        
+        public CharactersController(IUserService userService, ICharacterService characterService, ICartProvider cartProvider, IAuthenticationService authenticationService)
         {
+            this.userService = userService;
             this.characterService = characterService;
             this.cartProvider = cartProvider;
             this._authenticationService = authenticationService;
@@ -48,7 +51,7 @@ namespace MVC.Controllers
 
             var characters = characterService.GetFilteredCharacters(gender: gender, minPrice: minPrice, maxPrice: maxPrice, name: name);
             var charactersWithState = characters.Select(c => new CharacterWithState(c, CurrentCart));
-
+            
             return View(new CharacterListViewModel { Characters = charactersWithState, Cart = CurrentCart });
         }
 
@@ -91,8 +94,5 @@ namespace MVC.Controllers
                 CurrentCart.PointsRemaining += character.Price;
             }
         }
-
-        
-
     }
 }
