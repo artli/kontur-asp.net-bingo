@@ -17,6 +17,11 @@ namespace MVC.Services
                     session["Cart"] = new Cart();
                 return (Cart)session["Cart"];
             }
+
+            set
+            {
+                HttpContext.Current.Session["Cart"] = value;
+            }
         }
     }
 }

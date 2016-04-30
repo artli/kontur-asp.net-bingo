@@ -6,10 +6,9 @@ using System.Web;
 
 namespace MVC.ViewModels
 {
-    public class CharacterListViewModel
+    public class CartViewModel
     {
         public IEnumerable<CharacterWithState> Characters { get; set; }
-        public Cart Cart { get; set; }
         public bool UserHasSavedVotes { get; set; }
     }
 }

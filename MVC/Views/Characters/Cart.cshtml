@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CharacterWithState>
+﻿@model CartViewModel
 @{
     ViewBag.Title = "Chosen characters";
 }
@@ -7,9 +7,15 @@
 
 <h3>Characters you have voted for:</h3>
 
-@foreach (var character in Model)
+@foreach (var character in Model.Characters)
 {
-    @Html.Partial("_CharacterCard", character);
+    @Html.Partial("_CharacterCard", new CharacterCardViewModel { CharacterWithState = character, UserHasSavedVotes = Model.UserHasSavedVotes });
 }
+
+<p>
+    @using (Html.BeginForm("SaveVotes", "Characters")) {
+        <input type="submit" value="Save votes">
+    }
+</p>
 
 <p>@Html.ActionLink("Back to voting", "List")</p>

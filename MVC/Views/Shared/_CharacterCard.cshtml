@@ -1,32 +1,41 @@
-﻿@model CharacterWithState
+﻿@model CharacterCardViewModel
 @{
     string submitLabel = "Vote";
     string actionName = "Vote";
-    if (Model.State.AlreadyVotedFor )
+    if (Model.CharacterWithState.State.AlreadyVotedFor)
     {
         submitLabel = "Cancel vote";
-        actionName = "UnVote";
+        actionName = "Unvote";
     }
 
 
 }
-<div class="character-card" id="@("characterCard" + Model.Character.CharacterID)">
+<div class="character-card" id="@("characterCard" + Model.CharacterWithState.Character.CharacterID)">
     <div class="character-wrapper">
-        <div class="character-image"><img src="@("/Content/img/" + @Model.Character.ImageName)" alt="@Model.Character.Name" /></div>
+        <div class="character-image"><img src="@("/Content/img/" + @Model.CharacterWithState.Character.ImageName)" alt="@Model.CharacterWithState.Character.Name" /></div>
         <div class="character-description">
-            <p><b>Name</b>: @Model.Character.Name</p>
-            <p><b>Gender</b>: @Model.Character.Gender.ToString()</p>
-            <p><b>Description</b>: @Model.Character.Description</p>
-            <p><b>Price</b>: @Model.Character.Price</p>
+            <p><b>Name</b>: @Model.CharacterWithState.Character.Name</p>
+            <p><b>Gender</b>: @Model.CharacterWithState.Character.Gender.ToString()</p>
+            <p><b>Description</b>: @Model.CharacterWithState.Character.Description</p>
+            <p><b>Price</b>: @Model.CharacterWithState.Character.Price</p>
         </div>
         <div class="character-cart-form">
-            @if (Model.State.Affordable || Model.State.AlreadyVotedFor)
+            @if (Model.UserHasSavedVotes)
             {
-                using (Html.BeginForm(actionName, "Characters"))
+                if (Model.CharacterWithState.State.AlreadyVotedFor)
                 {
-                    <input name="characterID" value="@Model.Character.CharacterID" type="hidden" />
-
-                    <input type="Submit" value="@submitLabel">
+                    <b>You have voted for this character</b>
+                }
+            }
+            else
+            {
+                if (Model.CharacterWithState.State.Affordable || Model.CharacterWithState.State.AlreadyVotedFor)
+                {
+                    using (Html.BeginForm(actionName, "Characters"))
+                    {
+                        <input name="characterID" value="@Model.CharacterWithState.Character.CharacterID" type="hidden" />
+                        <input type="Submit" value="@submitLabel">
+                    }
                 }
             }
         </div>

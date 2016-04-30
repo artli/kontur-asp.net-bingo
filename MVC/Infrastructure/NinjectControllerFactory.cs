@@ -30,19 +30,21 @@ namespace MVC.Infrastructure
 
         private void AddBindings()
         {
-            ninjectKernel.Bind<IDbFactory>().To<DbFactory>();
+            ninjectKernel.Bind<IDbFactory>().To<DbFactory>().InThreadScope();
             ninjectKernel.Bind<IUnitOfWork>().To<UnitOfWork>();
 
             ninjectKernel.Bind<ICharacterRepository>().To<CharacterRepository>();
             ninjectKernel.Bind<IUserRepository>().To<UserRepository>();
+            ninjectKernel.Bind<IVoteRepository>().To<VoteRepository>();
 
             ninjectKernel.Bind<ICharacterService>().To<CharacterService>();
             ninjectKernel.Bind<IUserService>().To<UserService>();
+            ninjectKernel.Bind<IVoteService>().To<VoteService>();
 
             ninjectKernel.Bind<IAuthenticationService>().To<FormsAuthenticationService>();
 
             ninjectKernel.Bind<ICartProvider>().To<SessionCartProvider>();
-            
+            ninjectKernel.Bind<IWeekProvider>().To<WeekProvider>();
         }
     }
 }

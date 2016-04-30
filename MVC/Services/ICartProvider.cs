@@ -8,6 +8,6 @@ namespace MVC.Services
 {
     public interface ICartProvider
     {
-        Cart Cart { get; }
+        Cart Cart { get; set; }
     }
 }

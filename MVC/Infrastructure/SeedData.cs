@@ -50,7 +50,8 @@ namespace MVC.Infrastructure
             new User
             {
                 UserID = 0,
-                LoginName = "adadadmin"
+                LoginName = "adadadmin",
+                PwdHash = new byte[0] { }
             }
         };
 

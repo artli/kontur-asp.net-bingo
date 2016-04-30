@@ -152,12 +152,16 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Vote.cs" />
     <Compile Include="Models\VoteItem.cs" />
+    <Compile Include="Repositories\VoteRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Services\ICartProvider.cs" />
     <Compile Include="Services\SessionCartProvider.cs" />
     <Compile Include="Extensions\HtmlExtensions.cs" />
+    <Compile Include="Services\VoteService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Services\WeekProvider.cs" />
+    <Compile Include="ViewModels\CharacterCardViewModel.cs" />
+    <Compile Include="ViewModels\CartViewModel.cs" />
     <Compile Include="ViewModels\CharacterState.cs" />
     <Compile Include="ViewModels\CharacterWithState.cs" />
     <Compile Include="Models\Gender.cs" />

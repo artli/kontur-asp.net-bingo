@@ -18,19 +18,45 @@ namespace MVC.Controllers
         private readonly IUserService userService;
         private readonly ICharacterService characterService;
         private readonly ICartProvider cartProvider;
+        private readonly IWeekProvider weekProvider;
+        private readonly IVoteService voteService;
         private readonly IAuthenticationService _authenticationService;
-        
-        public CharactersController(IUserService userService, ICharacterService characterService, ICartProvider cartProvider, IAuthenticationService authenticationService)
+
+        public CharactersController(IVoteService voteService, IWeekProvider weekProvider, IUserService userService, ICharacterService characterService, ICartProvider cartProvider, IAuthenticationService authenticationService)
         {
+            this.voteService = voteService;
             this.userService = userService;
             this.characterService = characterService;
             this.cartProvider = cartProvider;
+            this.weekProvider = weekProvider;
             this._authenticationService = authenticationService;
         }
 
         private Cart CurrentCart
         {
             get { return cartProvider.Cart; }
+            set { cartProvider.Cart = value; }
+        }
+
+        private string CurrentWeek
+        {
+            get { return weekProvider.GetCurrentWeekID(); }
+        }
+
+        private bool CurrentUserHasSavedVotes()
+        {
+            bool userHasSavedVotes = false;
+            var user = _authenticationService.CurrentUser;
+            if (user != null && user.Votes.Count != 0)
+            {
+                var maxVote = user.Votes.First();
+                foreach (var vote in user.Votes.Skip(1))
+                    if (String.CompareOrdinal(vote.Week, maxVote.Week) > 0)
+                        maxVote = vote;
+                if (maxVote.Week == CurrentWeek)
+                    userHasSavedVotes = true;
+            }
+            return userHasSavedVotes;
         }
 
         public ActionResult List(Gender? gender, int? minPrice, int? maxPrice, string name)
@@ -49,50 +75,92 @@ namespace MVC.Controllers
                 listTitle = String.Format("Search results ({0}):", String.Join(", ", searchConstraints));
             ViewBag.ListTitle = listTitle;
 
+            var userHasSavedVotes = CurrentUserHasSavedVotes();
             var characters = characterService.GetFilteredCharacters(gender: gender, minPrice: minPrice, maxPrice: maxPrice, name: name);
             var charactersWithState = characters.Select(c => new CharacterWithState(c, CurrentCart));
-            
-            return View(new CharacterListViewModel { Characters = charactersWithState, Cart = CurrentCart });
+
+            return View(new CharacterListViewModel { Characters = charactersWithState, Cart = CurrentCart, UserHasSavedVotes = userHasSavedVotes });
         }
 
         public ActionResult Cart()
         {
-            var chosenCharacters = CurrentCart.ChosenCharacterIds.Select(characterService.GetCharacterByCharacterID).Select(c => new CharacterWithState(c, CurrentCart));
-            return View(chosenCharacters);
+            var userHasSavedVotes = CurrentUserHasSavedVotes();
+            var chosenCharacters = CurrentCart.ChosenCharacterIDs
+                .Select(characterService.GetCharacterByCharacterID)
+                .Select(c => new CharacterWithState(c, CurrentCart));
+            var model = new CartViewModel { Characters = chosenCharacters, UserHasSavedVotes = userHasSavedVotes };
+            return View(model);
         }
+
         public ActionResult Vote(int characterId)
         {
-            VoteUnVote(characterId,true);
-
+            VoteUnvote(characterId, true);
             return RedirectToAction("Cart");
         }
 
-        public ActionResult UnVote(int characterId)
+        public ActionResult Unvote(int characterId)
         {
-            VoteUnVote(characterId, false);
+            VoteUnvote(characterId, false);
             return RedirectToAction("Cart");
         }
-        private void VoteUnVote(int characterId, Boolean IsVote)
+
+        private void VoteUnvote(int characterId, Boolean IsVote)
         {
             var character = characterService.GetCharacterByCharacterID(characterId);
             if (character == null)
                 ModelState.AddModelError("MVC.Models.Characters",
                     "Unable to find the characted with CharacterID=" + characterId.ToString());
-            else if (!CurrentCart.ChosenCharacterIds.Contains(characterId) && IsVote)
+            else if (!CurrentCart.ChosenCharacterIDs.Contains(characterId) && IsVote)
             {
                 if (CurrentCart.PointsRemaining < character.Price)
                     ModelState.AddModelError("MVC.Models.Character", "You don't have enough points to vote for this character");
                 else
                 {
-                    CurrentCart.ChosenCharacterIds.Add(characterId);
+                    CurrentCart.ChosenCharacterIDs.Add(characterId);
                     CurrentCart.PointsRemaining -= character.Price;
                 }
             }
             else if (!IsVote)
             {
-                CurrentCart.ChosenCharacterIds.Remove(characterId);
+                CurrentCart.ChosenCharacterIDs.Remove(characterId);
                 CurrentCart.PointsRemaining += character.Price;
             }
+        }
+
+        public ActionResult SaveVotes()
+        {
+            var user = _authenticationService.CurrentUser;
+            if (user == null)
+                return RedirectToAction("Login", "Account");
+            if (user.Votes.Any(v => v.Week == CurrentWeek))
+            {
+                ModelState.AddModelError("MVC.Model.Vote", "You have already voted this week; vote cancelled");
+                return RedirectToAction("List");
+            }
+
+            var vote = new Vote
+            {
+                User = user,
+                Week = CurrentWeek,
+                Items = new List<VoteItem>()
+            };
+            for (int i = 0; i < CurrentCart.ChosenCharacterIDs.Count; i++)
+            {
+                var id = CurrentCart.ChosenCharacterIDs[i];
+                var voteItem = new VoteItem
+                {
+                    Character = characterService.GetCharacterByCharacterID(id),
+                    Position = i,
+                    Vote = vote
+                };
+                vote.Items.Add(voteItem);
+            }
+            voteService.CreateVote(vote);
+            voteService.Commit();
+
+            CurrentCart = new Cart();
+
+            return RedirectToAction("List");
         }
     }
 }

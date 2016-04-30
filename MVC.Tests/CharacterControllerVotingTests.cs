@@ -34,22 +34,22 @@ namespace MVC.Tests
             cart = new Cart();
             var cartProviderMock = new Mock<ICartProvider>();
             cartProviderMock.Setup(c => c.Cart).Returns(cart);
-            charactersController = new CharactersController(characterService, cartProviderMock.Object);
+            // charactersController = new CharactersController(characterService, cartProviderMock.Object);
         }
         
         [TestMethod]
         public void CharacterIsAddedToCartOnVoting()
         {
             charactersController.Vote(0);
-            Assert.IsTrue(cart.ChosenCharacterIds.Contains(0));
+            Assert.IsTrue(cart.ChosenCharacterIDs.Contains(0));
         }
 
         [TestMethod]
         public void CharacterIsRemovedFromCartOnUnvoting()
         {
-            cart.ChosenCharacterIds.Add(0);
+            cart.ChosenCharacterIDs.Add(0);
             charactersController.Vote(0);
-            Assert.IsFalse(cart.ChosenCharacterIds.Contains(0));
+            Assert.IsFalse(cart.ChosenCharacterIDs.Contains(0));
         }
 
         [TestMethod]
@@ -62,7 +62,7 @@ namespace MVC.Tests
         [TestMethod]
         public void PointsAreAddedOnUnvoting()
         {
-            cart.ChosenCharacterIds.Add(0);
+            cart.ChosenCharacterIDs.Add(0);
             charactersController.Vote(0);
             Assert.IsTrue(cart.PointsRemaining == 15);
         }
@@ -73,7 +73,7 @@ namespace MVC.Tests
             cart.PointsRemaining = 4;
             charactersController.Vote(0);
             Assert.IsTrue(cart.PointsRemaining == 4);
-            Assert.IsTrue(cart.ChosenCharacterIds.Count == 0);
+            Assert.IsTrue(cart.ChosenCharacterIDs.Count == 0);
         }
     }
 }

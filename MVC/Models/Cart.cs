@@ -10,6 +10,6 @@ namespace MVC.Models
         public const int DefaultPointsAmount = 10;
 
         public int PointsRemaining { get; set; } = DefaultPointsAmount;
-        public List<int> ChosenCharacterIds { get; private set; } = new List<int>();
+        public List<int> ChosenCharacterIDs { get; private set; } = new List<int>();
     }
 }

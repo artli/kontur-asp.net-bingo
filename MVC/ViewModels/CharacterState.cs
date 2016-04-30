@@ -16,7 +16,7 @@ namespace MVC.ViewModels
         public CharacterState(Character character, Cart cart)
         {
             Affordable = character.Price <= cart.PointsRemaining;
-            AlreadyVotedFor = cart.ChosenCharacterIds.Contains(character.CharacterID);
+            AlreadyVotedFor = cart.ChosenCharacterIDs.Contains(character.CharacterID);
         }
     }
 }
