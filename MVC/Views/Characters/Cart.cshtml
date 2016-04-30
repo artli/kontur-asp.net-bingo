@@ -9,7 +9,7 @@
 
 @foreach (var character in Model)
 {
-    @Html.Partial("CharacterCard", character);
+    @Html.Partial("_CharacterCard", character);
 }
 
 <p>@Html.ActionLink("Back to voting", "List")</p>

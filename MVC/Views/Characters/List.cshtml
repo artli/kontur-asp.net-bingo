@@ -10,7 +10,7 @@
 
 @foreach (var character in Model.Characters)
 {
-    @Html.Partial("CharacterCard", character);
+    @Html.Partial("_CharacterCard", character);
 }
 
-@Html.Partial("SearchForm")
+@Html.Partial("_SearchForm")
