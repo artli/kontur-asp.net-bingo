@@ -13,19 +13,19 @@ namespace MVC.Infrastructure
 		#region SALT
 		private static readonly Byte[] SALT = {
         0x2B,
-        0x31,
+        0x1,
         0x23,
         0x1A,
         0xA2,
-        0xB2,
+        0xC2,
         0x84,
         0xB2,
         0x87,
         0x33,
         0xC3,
         0xB2, 
-        0x55,
-        0x75,
+        0x25,
+        0x15,
         0x2C,
         0x0F };
 		#endregion

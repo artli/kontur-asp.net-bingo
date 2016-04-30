@@ -50,9 +50,14 @@ namespace MVC.Infrastructure
             new User
             {
                 UserID = 0,
+<<<<<<< Updated upstream
+                LoginName = "adadadmin",
+                PwdHash = new byte[0] { }
+=======
                 LoginName = "admin",
                 PwdHash = Security.GenerateHash("1234")
 
+>>>>>>> Stashed changes
             }
         };
 

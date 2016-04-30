@@ -49,7 +49,7 @@ namespace MVC.Services
 
         public User GetUserByLoginName(string name)
         {
-            return userRepository.Get(c => c.LoginName == name);
+            return userRepository.Get(c => c.LoginName.Equals(name,StringComparison.InvariantCultureIgnoreCase));
         }
 
         public void CreateUser(User User)

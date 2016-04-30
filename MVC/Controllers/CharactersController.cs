@@ -126,6 +126,11 @@ namespace MVC.Controllers
                 CurrentCart.PointsRemaining += character.Price;
             }
         }
+        [Authenticated]
+        public ActionResult SecretPage()
+        {
+            return View(_authenticationService.CurrentUser);
+        }
 
         public ActionResult SaveVotes()
         {

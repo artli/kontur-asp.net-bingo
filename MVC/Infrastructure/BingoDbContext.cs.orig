@@ -17,10 +17,25 @@ namespace MVC.Repositories
         public DbSet<VoteItem> VoteItems { get; set; }
 
         public virtual void Commit()
+<<<<<<< Updated upstream
+        {   try
+            {
+                base.SaveChanges();
+            } catch (Exception e)
+            {
+                var err = GetValidationErrors();
+                throw;
+=======
         {
-
-            base.SaveChanges();
-
+            try
+            {
+                base.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                var err = GetValidationErrors();
+>>>>>>> Stashed changes
+            }
         }
     }
 }

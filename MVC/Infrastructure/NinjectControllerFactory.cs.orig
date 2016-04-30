@@ -45,9 +45,13 @@ namespace MVC.Infrastructure
             ninjectKernel.Bind<IAuthenticationService>().To<FormsAuthenticationService>();
 
             ninjectKernel.Bind<ICartProvider>().To<SessionCartProvider>();
+<<<<<<< Updated upstream
             ninjectKernel.Bind<IWeekProvider>().To<WeekProvider>();
+=======
+
             
 
+>>>>>>> Stashed changes
         }
     }
 }

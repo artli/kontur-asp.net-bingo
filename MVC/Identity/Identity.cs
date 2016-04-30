@@ -30,9 +30,9 @@ namespace MVC.Identity
 			_userService = userService;
 		}
 
-		public FormsAuthenticationService()
-		{
-		}
+		//public FormsAuthenticationService()
+		//{
+		//}
 
 		public void Login(User user, bool rememberMe)
 		{
@@ -43,9 +43,9 @@ namespace MVC.Identity
 
 			FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(
 				1,
-				user.UserID.ToString(),
+				user.LoginName,
 				DateTime.Now,
-				expiresDate, rememberMe, user.UserID.ToString());
+				expiresDate, rememberMe, user.LoginName);
 			string encryptedTicket = FormsAuthentication.Encrypt(ticket);
 
 			SetValue(AUTH_COOKIE_NAME, encryptedTicket, expiresDate);
@@ -58,12 +58,6 @@ namespace MVC.Identity
 		{
 			SetValue(AUTH_COOKIE_NAME, null, DateTime.Now.AddYears(-1));
 			_currentUser = null;
-		}
-		
-
-		public static Boolean VerifyPassword(String password, Byte[] hash)
-		{
-			return Security.VerifyPassword(password,hash);
 		}
 
 		private User _currentUser;
@@ -81,8 +75,8 @@ namespace MVC.Identity
 							var ticket = FormsAuthentication.Decrypt(cookie.ToString());
 							if (ticket != null)
 							{
-								var userId = Int32.Parse(ticket.UserData);
-								_currentUser = _userService.GetUserByUserID(userId);
+								var login = ticket.UserData;
+								_currentUser = _userService.GetUserByLoginName(login);
 							}
 						}
 
