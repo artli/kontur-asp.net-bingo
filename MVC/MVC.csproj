@@ -132,14 +132,19 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CharactersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Identity\AuthenticatedAttribute.cs" />
+    <Compile Include="Identity\Identity.cs" />
+    <Compile Include="Models\UserRole.cs" />
     <Compile Include="Infrastructure\DbFactory.cs" />
     <Compile Include="Infrastructure\IDbFactory.cs" />
     <Compile Include="Infrastructure\IUnitOfWork.cs" />
     <Compile Include="Infrastructure\NinjectControllerFactory.cs" />
+    <Compile Include="Extensions\Security.cs" />
     <Compile Include="Infrastructure\SeedData.cs" />
     <Compile Include="Infrastructure\UnitOfWork.cs" />
     <Compile Include="Models\Cart.cs" />
@@ -204,6 +209,7 @@
     <Content Include="Views\Shared\_CharacterCard.cshtml" />
     <Content Include="Views\Characters\Cart.cshtml" />
     <Content Include="Views\Shared\_SearchForm.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

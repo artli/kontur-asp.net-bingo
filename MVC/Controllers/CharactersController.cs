@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using MVC.Identity;
 using MVC.Models;
 using MVC.ViewModels;
 
@@ -15,11 +16,13 @@ namespace MVC.Controllers
     {
         private readonly ICharacterService characterService;
         private readonly ICartProvider cartProvider;
+        private readonly IAuthenticationService _authenticationService;
 
-        public CharactersController(ICharacterService characterService, ICartProvider cartProvider)
+        public CharactersController(ICharacterService characterService, ICartProvider cartProvider, IAuthenticationService authenticationService)
         {
             this.characterService = characterService;
             this.cartProvider = cartProvider;
+            this._authenticationService = authenticationService;
         }
 
         private Cart CurrentCart

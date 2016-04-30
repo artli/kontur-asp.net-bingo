@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using MVC.Identity;
 
 namespace MVC.Infrastructure
 {
@@ -37,7 +38,10 @@ namespace MVC.Infrastructure
             ninjectKernel.Bind<ICharacterService>().To<CharacterService>();
             ninjectKernel.Bind<IUserService>().To<UserService>();
 
+            ninjectKernel.Bind<IAuthenticationService>().To<FormsAuthenticationService>();
+
             ninjectKernel.Bind<ICartProvider>().To<SessionCartProvider>();
+            
         }
     }
 }

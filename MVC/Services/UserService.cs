@@ -16,6 +16,7 @@ namespace MVC.Services
         User GetUserByLoginName(string name);
         void CreateUser(User User);
         void Commit();
+        
     }
 
     public class UserService : IUserService
@@ -60,6 +61,8 @@ namespace MVC.Services
         {
             unitOfWork.Commit();
         }
+
+        
 
         #endregion
 
