@@ -15,7 +15,6 @@ namespace MVC.Stuff
             .Cast<TEnum>();
 
 
-
             IEnumerable<SelectListItem> items =
                 from value in values
                 select new SelectListItem
