@@ -13,8 +13,8 @@
             @if (Model.State.Affordable || Model.State.AlreadyVotedFor)
             {
                 using (Html.BeginForm("Vote", "Characters"))
-                {
-                    @Html.Hidden("characterID", Model.Character.CharacterID);
+                {   
+                    <input name="characterID" value="@Model.Character.CharacterID" type="hidden"/>
                     string submitLabel = (!Model.State.AlreadyVotedFor && Model.State.Affordable) ? "Vote" : "Cancel vote";
                     <input type="Submit" value="@submitLabel">
                 }
