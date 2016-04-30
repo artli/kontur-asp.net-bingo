@@ -1,19 +1,10 @@
-<<<<<<< HEAD
 ﻿@using MVC.Stuff
-=======
-﻿@using MVC.Stuff
->>>>>>> 04e6b43e4d46394f12e7dc84adecf8d8490d3204
 <div class="character-search-form">
     <p><h3>Search for characters:</h3></p>
     @using (Html.BeginRouteForm("Show all characters"))
     {
-<<<<<<< HEAD
         <p>
-            <b>Gender</b>:@Html.EnumDropDownList("gender",Gender.Female,"Any",null,null)
-=======
-        <p>
-            <b>Gender</b>:@Html.EnumDropDownList("gender",Gender.Female,"Any",null,null)
->>>>>>> 04e6b43e4d46394f12e7dc84adecf8d8490d3204
+            <b>Gender</b>: @Html.EnumDropDownList("gender",Gender.Female,"Any",null,null)
             
             @*@Html.DropDownList("gender", new[] {
                          new SelectListItem { Text = "Any", Value = null, Selected = true },
