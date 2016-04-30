@@ -1,17 +1,10 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MVC.Controllers;
-using MVC.Services;
-using Moq;
-using MVC.Models;
-using MVC.Repositories;
-using System.Collections.Generic;
-using MVC.Infrastructure;
 
 namespace MVC.Tests
 {
     [TestClass]
-    public class CharacterControllerVotingTests
+    public class CharacterControllerVoteSavingTests
     {
         private static readonly IList<Character> allCharacters = new List<Character> {
                 new Character { CharacterID = 0, Gender = Gender.Female, Price = 5 }
@@ -42,7 +35,7 @@ namespace MVC.Tests
             var authenticationService = new Mock<Identity.IAuthenticationService>().Object;
             charactersController = new CharactersController(voteService, weekProvider, userService, characterService, cartProviderMock.Object, authenticationService);
         }
-        
+
         [TestMethod]
         public void CharacterIsAddedToCartOnVoting()
         {
@@ -82,4 +75,3 @@ namespace MVC.Tests
             Assert.IsTrue(cart.ChosenCharacterIDs.Count == 0);
         }
     }
-}

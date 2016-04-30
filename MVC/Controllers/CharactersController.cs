@@ -84,16 +84,20 @@ namespace MVC.Controllers
 
         private bool CurrentUserHasVotedForCharacter(Character character)
         {
+            if (CurrentUser != null)
+            {
+                var maxVote = MaxVote(CurrentUser.Votes);
+                if (maxVote != null && maxVote.Week == CurrentWeek)
+                {
+                    foreach (var voteItem in maxVote.Items)
+                        if (voteItem.Character.CharacterID == character.CharacterID)
+                            return true;
+                    return false;
+                }
+            }
+
             if (CurrentCart.ChosenCharacterIDs.Contains(character.CharacterID))
                 return true;
-
-            var maxVote = MaxVote(CurrentUser.Votes);
-            if (maxVote.Week == CurrentWeek)
-            {
-                foreach (var voteItem in maxVote.Items)
-                    if (voteItem.Character.CharacterID == character.CharacterID)
-                        return true;
-            }
 
             return false;
         }
