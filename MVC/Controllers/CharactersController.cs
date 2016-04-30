@@ -74,7 +74,7 @@ namespace MVC.Controllers
                 }
             }
 
-            var chosenCharacters = Cart.ChosenCharacterIds.Select(id => characterService.GetCharacterByCharacterID(id)).Select(c => new CharacterWithState(c, Cart));
+            var chosenCharacters = Cart.ChosenCharacterIds.Select(characterService.GetCharacterByCharacterID).Select(c => new CharacterWithState(c, Cart));
             return View(chosenCharacters);
         }
     }
