@@ -216,6 +216,7 @@
     <Content Include="Views\Shared\_SearchForm.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Characters\SecretPage.cshtml" />
+    <Content Include="Views\Account\LoginForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

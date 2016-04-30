@@ -63,6 +63,13 @@ namespace MVC.Controllers
             _authenticationService.Logoff();
             return RedirectToAction("List", "Characters");
         }
+        [ChildActionOnly]
+        public ActionResult LoginForm()
+        {
+            var user = _authenticationService.CurrentUser;
+            return View(user);
+        }
+
         public ActionResult TestUser(string username, string pwd)
         {
             var user = new User()
@@ -77,5 +84,6 @@ namespace MVC.Controllers
             return RedirectToAction("Login");
 
         }
+
     }
 }

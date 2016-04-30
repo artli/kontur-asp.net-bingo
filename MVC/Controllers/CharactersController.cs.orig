@@ -84,6 +84,12 @@ namespace MVC.Controllers
 
         private bool CurrentUserHasVotedForCharacter(Character character)
         {
+<<<<<<< Updated upstream
+=======
+            if (CurrentCart.ChosenCharacterIDs.Contains(character.CharacterID))
+                return true;
+
+>>>>>>> Stashed changes
             if (CurrentUser != null)
             {
                 var maxVote = MaxVote(CurrentUser.Votes);
@@ -92,13 +98,18 @@ namespace MVC.Controllers
                     foreach (var voteItem in maxVote.Items)
                         if (voteItem.Character.CharacterID == character.CharacterID)
                             return true;
+<<<<<<< Updated upstream
                     return false;
                 }
-                }
+            }
 
             if (CurrentCart.ChosenCharacterIDs.Contains(character.CharacterID))
                 return true;
 
+=======
+                }
+            }
+>>>>>>> Stashed changes
             return false;
         }
 
