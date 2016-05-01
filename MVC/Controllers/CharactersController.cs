@@ -226,7 +226,9 @@ namespace MVC.Controllers
             var thread = commentThreadService.GetCommentThreadByCharacterID(characterID);
             var commentInstance = new Comment { DateTime = DateTime.Now, Text = comment, User = CurrentUser };
             commentThreadService.AddComment(thread, commentInstance);
-            var result = new { characterId = characterID, comments = thread.Comments.Select(_ => new { DateTime = _.DateTime.ToString(), UserName = _.User.LoginName, Text = _.Text }).ToList() };
+            commentThreadService.Commit();
+            var newThread = commentThreadService.GetCommentThreadByCharacterID(characterID);
+            var result = new { characterId = characterID, comments = newThread.Comments.Select(_ => new { DateTime = _.DateTime.ToString(), UserName = _.User.LoginName, Text = _.Text }).ToList() };
             return Json(result);
         }
     }
