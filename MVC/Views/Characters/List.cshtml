@@ -14,3 +14,24 @@
 }
 
 @Html.Partial("_SearchForm")
+
+@section scripts{
+    <script>
+        function addComment(characterId) {
+            var comment = $('#comment' + characterId).val();
+            $.ajax({
+                url: '@Url.Action("AddComment","Characters")/',
+                data: { characterId, comment },
+                method:"POST",
+                success: function (data,textStatus) {
+                    if (data.characterId && data.comments) {
+                        $('comments' + data.characterId).empty();
+                        $.each(data.comments, function(i, val) {
+                            $('comments' + data.characterId).append("<p>[" + val.DateTime + "] <b>" + val.UserName+ "</b> says: " + val.Text + "</p>");
+                        });
+                    }
+                }
+            });
+        }
+    </script>
+}

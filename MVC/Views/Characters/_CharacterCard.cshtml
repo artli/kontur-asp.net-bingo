@@ -41,10 +41,15 @@
         </div>
         @if (Model.CharacterViewModel.CommentThread != null)
         {
-            <div class="comments">
+            <div class="comments@(Model.CharacterViewModel.Character.CharacterID)">
                 <p><b>Discussion:</b></p>
                 @Html.Partial("_CommentThread", Model.CharacterViewModel.CommentThread)
             </div>
         }
+        <div class="form-group">
+            <textarea class="form-control input-sm" id="comment@(Model.CharacterViewModel.Character.CharacterID)" type="text"></textarea>
+            <br/>
+            <button type="button" class="btn btn-primary" onclick="addComment(@Model.CharacterViewModel.Character.CharacterID)">AddComment</button>
+        </div> 
     </div>
 </div>
