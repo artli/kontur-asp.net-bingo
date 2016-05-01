@@ -8,7 +8,7 @@ namespace MVC.ViewModels
 {
     public class CartViewModel
     {
-        public IEnumerable<CharacterWithState> Characters { get; set; }
+        public IEnumerable<CharacterViewModel> Characters { get; set; }
         public bool UserHasSavedVotes { get; set; }
     }
 }

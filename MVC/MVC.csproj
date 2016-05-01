@@ -136,6 +136,10 @@
     <Compile Include="Controllers\CharacterEditController.cs" />
     <Compile Include="Controllers\CharactersController.cs" />
     <Compile Include="Extensions\ExtensionsMethods.cs" />
+    <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\CommentThread.cs" />
+    <Compile Include="Repositories\CommentThreadRepository.cs" />
+    <Compile Include="Services\CommentThreadService.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -167,7 +171,7 @@
     <Compile Include="ViewModels\CartViewModel.cs" />
     <Compile Include="ViewModels\CharacterEditViewModel.cs" />
     <Compile Include="ViewModels\CharacterState.cs" />
-    <Compile Include="ViewModels\CharacterWithState.cs" />
+    <Compile Include="ViewModels\CharacterViewModel.cs" />
     <Compile Include="Models\Gender.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Infrastructure\BingoDbContext.cs" />
@@ -214,9 +218,9 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Characters\List.cshtml" />
-    <Content Include="Views\Shared\_CharacterCard.cshtml" />
+    <Content Include="Views\Characters\_CharacterCard.cshtml" />
     <Content Include="Views\Characters\Cart.cshtml" />
-    <Content Include="Views\Shared\_SearchForm.cshtml" />
+    <Content Include="Views\Characters\_SearchForm.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Characters\SecretPage.cshtml" />
     <Content Include="Views\CharacterEdit\Create.cshtml" />
@@ -227,6 +231,8 @@
     <Content Include="Views\Account\LoginForm.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Price.cshtml" />
+    <Content Include="Views\Characters\_CommentThread.cshtml" />
+    <Content Include="Views\Characters\_Comment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

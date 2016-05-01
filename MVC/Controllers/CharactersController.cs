@@ -20,15 +20,17 @@ namespace MVC.Controllers
         private readonly ICartProvider cartProvider;
         private readonly IWeekProvider weekProvider;
         private readonly IVoteService voteService;
+        private readonly ICommentThreadService commentThreadService;
         private readonly IAuthenticationService _authenticationService;
 
-        public CharactersController(IVoteService voteService, IWeekProvider weekProvider, IUserService userService, ICharacterService characterService, ICartProvider cartProvider, IAuthenticationService authenticationService)
+        public CharactersController(ICommentThreadService commentThreadService, IVoteService voteService, IWeekProvider weekProvider, IUserService userService, ICharacterService characterService, ICartProvider cartProvider, IAuthenticationService authenticationService)
         {
             this.voteService = voteService;
             this.userService = userService;
             this.characterService = characterService;
             this.cartProvider = cartProvider;
             this.weekProvider = weekProvider;
+            this.commentThreadService = commentThreadService;
             this._authenticationService = authenticationService;
         }
 
@@ -77,9 +79,22 @@ namespace MVC.Controllers
             };
         }
 
-        private CharacterWithState GetCharacterWithState(Character character)
+        private CharacterViewModel GetCharacterViewModel(Character character, bool loadCommentThread)
         {
-            return new CharacterWithState { Character = character, State = GetCharacterState(character) };
+            CommentThread thread = null;
+            if (loadCommentThread)
+            {
+                thread = commentThreadService.GetCommentThreadByCharacterID(character.CharacterID);
+                if (thread == null)
+                {
+                    thread = commentThreadService.GetNewCommentThreadForCharacter(character);
+                    var admin = userService.GetUserByUserID(0);
+                    foreach (var comment in thread.Comments)
+                        comment.User = admin;
+                    commentThreadService.Commit();
+                }
+            }
+            return new CharacterViewModel { Character = character, State = GetCharacterState(character), CommentThread = thread };
         }
 
         private bool CurrentUserHasVotedForCharacter(Character character)
@@ -120,9 +135,9 @@ namespace MVC.Controllers
 
             var userHasSavedVotes = CurrentUserHasSavedVotes();
             var characters = characterService.GetFilteredCharacters(gender: gender, minPrice: minPrice, maxPrice: maxPrice, name: name);
-            var charactersWithState = characters.Select(c => GetCharacterWithState(c));
+            var characterViewModels = characters.Select(c => GetCharacterViewModel(c, true));
 
-            return View(new CharacterListViewModel { Characters = charactersWithState, Cart = CurrentCart, UserHasSavedVotes = userHasSavedVotes });
+            return View(new CharacterListViewModel { Characters = characterViewModels, Cart = CurrentCart, UserHasSavedVotes = userHasSavedVotes });
         }
 
         public ActionResult Cart()
@@ -130,7 +145,7 @@ namespace MVC.Controllers
             var userHasSavedVotes = CurrentUserHasSavedVotes();
             var chosenCharacters = CurrentCart.ChosenCharacterIDs
                 .Select(characterService.GetCharacterByCharacterID)
-                .Select(c => GetCharacterWithState(c));
+                .Select(c => GetCharacterViewModel(c, false));
             var model = new CartViewModel { Characters = chosenCharacters, UserHasSavedVotes = userHasSavedVotes };
             return View(model);
         }

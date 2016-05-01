@@ -1,0 +1,6 @@
+﻿@model MVC.Models.CommentThread
+
+@foreach (var comment in Model.Comments)
+{
+    <p>@Html.Partial("_Comment", comment);</p>
+}

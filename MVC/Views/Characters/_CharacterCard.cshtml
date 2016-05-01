@@ -1,0 +1,50 @@
+﻿@model CharacterCardViewModel
+@{
+    string submitLabel = "Vote";
+    string actionName = "Vote";
+    if (Model.CharacterViewModel.State.AlreadyVotedFor)
+    {
+        submitLabel = "Cancel vote";
+        actionName = "Unvote";
+    }
+
+
+}
+<div class="character-card" id="@("characterCard" + Model.CharacterViewModel.Character.CharacterID)">
+    <div class="character-wrapper">
+        <div class="character-image"><img src="@("/Content/img/" + @Model.CharacterViewModel.Character.ImageName)" alt="@Model.CharacterViewModel.Character.Name" /></div>
+        <div class="character-description">
+            <p><b>Name</b>: @Model.CharacterViewModel.Character.Name</p>
+            <p><b>Gender</b>: @Model.CharacterViewModel.Character.Gender.ToString()</p>
+            <p><b>Description</b>: @Model.CharacterViewModel.Character.Description</p>
+            <p><b>Price</b>: @Model.CharacterViewModel.Character.Price</p>
+        </div>
+        <div class="character-cart-form">
+            @if (Model.UserHasSavedVotes)
+            {
+                if (Model.CharacterViewModel.State.AlreadyVotedFor)
+                {
+                    <b>You have voted for this character</b>
+                }
+            }
+            else
+            {
+                if (Model.CharacterViewModel.State.Affordable || Model.CharacterViewModel.State.AlreadyVotedFor)
+                {
+                    using (Html.BeginForm(actionName, "Characters"))
+                    {
+                        <input name="characterID" value="@Model.CharacterViewModel.Character.CharacterID" type="hidden" />
+                        <input type="Submit" value="@submitLabel">
+                    }
+                }
+            }
+        </div>
+        @if (Model.CharacterViewModel.CommentThread != null)
+        {
+            <div class="comments">
+                <p><b>Discussion:</b></p>
+                @Html.Partial("_CommentThread", Model.CharacterViewModel.CommentThread)
+            </div>
+        }
+    </div>
+</div>

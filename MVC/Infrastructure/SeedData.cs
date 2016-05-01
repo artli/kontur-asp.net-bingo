@@ -8,9 +8,9 @@ using System.Web;
 
 namespace MVC.Infrastructure
 {
-    public class SeedData : DropCreateDatabaseIfModelChanges<BingoDbContext>
+    public class SeedData : DropCreateDatabaseAlways<BingoDbContext>
     {
-        private readonly List<Character> characters = new List<Character>
+        private static readonly List<Character> characters = new List<Character>
         {
             new Character {
                 CharacterID = 0,
@@ -46,13 +46,32 @@ namespace MVC.Infrastructure
             },
         };
 
-        private readonly List<User> users = new List<User> {
+        private static readonly List<User> users = new List<User> {
             new User
             {
                 UserID = 0,
                 LoginName = "admin",
-                PwdHash = Security.GenerateHash("1234")
+                PwdHash = Security.GenerateHash("1234"),
+                Role = UserRole.Admin
+            }
+        };
 
+        private static readonly List<Comment> comments = new List<Comment>
+        {
+            new Comment
+            {
+                DateTime = DateTime.Now,
+                User = users[0],
+                Text = "Such a shitty character"
+            }
+        };
+
+        private static readonly List<CommentThread> commentThreads = new List<CommentThread>
+        {
+            new CommentThread
+            {
+                Character = characters[0],
+                Comments = new List<Comment> { comments[0] }
             }
         };
 
@@ -61,6 +80,8 @@ namespace MVC.Infrastructure
             var votes = GetVotes(users[0]);
             characters.ForEach(c => context.Characters.Add(c));
             users.ForEach(u => context.Users.Add(u));
+            comments.ForEach(c => context.Comments.Add(c));
+            commentThreads.ForEach(c => context.CommentThreads.Add(c));
             foreach (var vote in votes)
             {
                 context.Votes.Add(vote);
@@ -73,10 +94,11 @@ namespace MVC.Infrastructure
 
         private List<Vote> GetVotes(User user)
         {
-            var vote = new Vote {
+            var vote = new Vote
+            {
                 VoteID = 0,
                 Week = "2016-10",
-                User = users[0]
+                User = user
             };
             var voteItems = new List<VoteItem>
             {

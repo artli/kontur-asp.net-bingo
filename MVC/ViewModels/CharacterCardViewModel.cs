@@ -8,7 +8,7 @@ namespace MVC.ViewModels
 {
     public class CharacterCardViewModel
     {
-        public CharacterWithState CharacterWithState { get; set; }
+        public CharacterViewModel CharacterViewModel { get; set; }
         public bool UserHasSavedVotes;
     }
 }

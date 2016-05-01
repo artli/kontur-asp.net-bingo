@@ -55,7 +55,9 @@ namespace MVC.Tests
             var mockAuthenticationService = new Mock<Identity.IAuthenticationService>();
             mockAuthenticationService.Setup(s => s.CurrentUser).Returns(user);
 
-            charactersController = new CharactersController(mockVoteService.Object, weekProvider, userService, characterService, cartProviderMock.Object, mockAuthenticationService.Object);
+            var commentThreadService = new Mock<ICommentThreadService>().Object;
+
+            charactersController = new CharactersController(commentThreadService, mockVoteService.Object, weekProvider, userService, characterService, cartProviderMock.Object, mockAuthenticationService.Object);
         }
 
         [TestMethod]

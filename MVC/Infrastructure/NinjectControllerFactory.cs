@@ -37,10 +37,12 @@ namespace MVC.Infrastructure
             ninjectKernel.Bind<ICharacterRepository>().To<CharacterRepository>();
             ninjectKernel.Bind<IUserRepository>().To<UserRepository>();
             ninjectKernel.Bind<IVoteRepository>().To<VoteRepository>();
+            ninjectKernel.Bind<ICommentThreadRepository>().To<CommentThreadRepository>();
 
             ninjectKernel.Bind<ICharacterService>().To<CharacterService>();
             ninjectKernel.Bind<IUserService>().To<UserService>();
             ninjectKernel.Bind<IVoteService>().To<VoteService>();
+            ninjectKernel.Bind<ICommentThreadService>().To<CommentThreadService>();
 
             ninjectKernel.Bind<IAuthenticationService>().To<FormsAuthenticationService>();
 

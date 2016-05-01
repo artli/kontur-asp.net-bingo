@@ -6,9 +6,10 @@ using System.Web;
 
 namespace MVC.ViewModels
 {
-    public class CharacterWithState
+    public class CharacterViewModel
     {
         public Character Character { get; set; }
         public CharacterState State { get; set; }
+        public CommentThread CommentThread { get; set; }
     }
 }

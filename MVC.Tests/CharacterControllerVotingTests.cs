@@ -40,7 +40,10 @@ namespace MVC.Tests
             var weekProvider = new Mock<IWeekProvider>().Object;
             var userService = new Mock<IUserService>().Object;
             var authenticationService = new Mock<Identity.IAuthenticationService>().Object;
-            charactersController = new CharactersController(voteService, weekProvider, userService, characterService, cartProviderMock.Object, authenticationService);
+
+            var commentThreadService = new Mock<ICommentThreadService>().Object;
+
+            charactersController = new CharactersController(commentThreadService, voteService, weekProvider, userService, characterService, cartProviderMock.Object, authenticationService);
         }
         
         [TestMethod]

@@ -51,7 +51,7 @@ namespace MVC.Controllers
                 {
                     if (Security.VerifyPassword(userView.Password, user.PwdHash))
                     {
-                        _authenticationService.Login(user,userView.IsPersistent);
+                        _authenticationService.Login(user, userView.IsPersistent);
                         return RedirectToAction("List", "Characters");
                     }
                 }
@@ -91,17 +91,26 @@ namespace MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Register(UserViewModel userView)
         {
-            var user = new User()
+            if (ModelState.IsValid)
             {
-                LoginName = userView.Login,
-                PwdHash = Security.GenerateHash(userView.Password),
-                Role = UserRole.User,
-                Votes = new List<Vote>()
-            };
-            userService.CreateUser(user);
-            userService.Commit();
+                var user = new User()
+                {
+                    LoginName = userView.Login,
+                    PwdHash = Security.GenerateHash(userView.Password),
+                    Role = UserRole.User,
+                    Votes = new List<Vote>()
+                };
+                if (userService.GetUserByLoginName(userView.Login) != null)
+                {
+                    ModelState.AddModelError("Login", "A user with this name alreay exists");
+                    return View();
+                }
+                userService.CreateUser(user);
+                userService.Commit();
 
-            _authenticationService.Login(user, userView.IsPersistent);
+                _authenticationService.Login(user, userView.IsPersistent);
+            }
+
             return RedirectToAction("List", "Characters");
         }
     }
