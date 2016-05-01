@@ -54,7 +54,7 @@ namespace MVC.Repositories
 
         public override CommentThread Get(Expression<Func<CommentThread, bool>> where)
         {
-            return dbSet.Include("Comments").Include("Comments.User").Where(where).FirstOrDefault<CommentThread>();
+            return dbSet.Include("Comments").Include("Comments.User").Include("Character").Where(where).FirstOrDefault<CommentThread>();
         }
     }
 

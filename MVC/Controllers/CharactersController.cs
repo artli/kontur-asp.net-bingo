@@ -221,6 +221,7 @@ namespace MVC.Controllers
         }
 
         [HttpPost]
+        [Authenticated]
         public ActionResult AddComment(int characterID, string comment)
         {
             var thread = commentThreadService.GetCommentThreadByCharacterID(characterID);

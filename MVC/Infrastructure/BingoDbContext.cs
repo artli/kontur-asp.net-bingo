@@ -22,7 +22,13 @@ namespace MVC.Repositories
 
         public virtual void Commit()
         {
-            base.SaveChanges();
+            try
+            {
+                base.SaveChanges();
+            } catch (Exception e)
+            {
+                throw;
+            }
         }
     }
 }

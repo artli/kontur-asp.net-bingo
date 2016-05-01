@@ -71,6 +71,7 @@ namespace MVC.Services
 
         public void AddComment(CommentThread commentThread, Comment comment)
         {
+            commentThread.Comments.Add(comment);
             commentThreadRepository.Update(commentThread);
         }
 
