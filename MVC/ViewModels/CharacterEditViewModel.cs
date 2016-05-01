@@ -19,6 +19,7 @@ namespace MVC.ViewModels
         public string Description { get; set; }
         [Required]
         public int Price { get; set; }
+        [DataType(DataType.Upload)]
         public HttpPostedFileBase File { get; set; }
     }
 }

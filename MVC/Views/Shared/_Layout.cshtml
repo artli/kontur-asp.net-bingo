@@ -24,6 +24,7 @@
                     <li>@Html.RouteLink("Character list", "Show all characters")</li>
                     <li>@Html.ActionLink("Male characters", "List", "Characters", new {gender = "Male"}, null)</li>
                     <li>@Html.ActionLink("Female characters", "List", "Characters", new {gender = "Female"}, null)</li>
+                    <li>@Html.ActionLink("Your cart", "Cart", "Characters")</li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     @Html.Action("LoginForm","Account")
