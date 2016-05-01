@@ -16,17 +16,18 @@ namespace MVC.Services
         CommentThread GetCommentThreadByCharacterID(int id);
         void CreateCommentThread(CommentThread CommentThread);
         CommentThread GetNewCommentThreadForCharacter(Character character);
+        void AddComment(CommentThread commentThread, Comment comment);
         void Commit();
     }
 
     public class CommentThreadService : ICommentThreadService
     {
-        private readonly ICommentThreadRepository CommentThreadRepository;
+        private readonly ICommentThreadRepository commentThreadRepository;
         private readonly IUnitOfWork unitOfWork;
 
-        public CommentThreadService(ICommentThreadRepository CommentThreadRepository, IUnitOfWork unitOfWork)
+        public CommentThreadService(ICommentThreadRepository commentThreadRepository, IUnitOfWork unitOfWork)
         {
-            this.CommentThreadRepository = CommentThreadRepository;
+            this.commentThreadRepository = commentThreadRepository;
             this.unitOfWork = unitOfWork;
         }
 
@@ -34,27 +35,27 @@ namespace MVC.Services
 
         public IEnumerable<CommentThread> GetAllCommentThreads()
         {
-            return CommentThreadRepository.GetAll();
+            return commentThreadRepository.GetAll();
         }
 
         public IEnumerable<CommentThread> GetFilteredCommentThreads(Func<CommentThread, bool> predicate)
         {
-            return CommentThreadRepository.GetAll().Where(predicate);
+            return commentThreadRepository.GetAll().Where(predicate);
         }
 
         public CommentThread GetCommentThreadByCommentThreadID(int id)
         {
-            return CommentThreadRepository.GetById(id);
+            return commentThreadRepository.GetById(id);
         }
 
         public CommentThread GetCommentThreadByCharacterID(int id)
         {
-            return CommentThreadRepository.Get(t => t.Character.CharacterID == id);
+            return commentThreadRepository.Get(t => t.Character.CharacterID == id);
         }
 
         public void CreateCommentThread(CommentThread commentThread)
         {
-            CommentThreadRepository.Add(commentThread);
+            commentThreadRepository.Add(commentThread);
         }
 
         public CommentThread GetNewCommentThreadForCharacter(Character character)
@@ -64,8 +65,13 @@ namespace MVC.Services
                 Character = character,
                 Comments = new List<Comment>()
             };
-            CommentThreadRepository.Add(thread);
+            commentThreadRepository.Add(thread);
             return thread;
+        }
+
+        public void AddComment(CommentThread commentThread, Comment comment)
+        {
+            commentThreadRepository.Update(commentThread);
         }
 
         public void Commit()

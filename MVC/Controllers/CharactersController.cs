@@ -184,11 +184,6 @@ namespace MVC.Controllers
                 CurrentCart.PointsRemaining += character.Price;
             }
         }
-        [Authenticated]
-        public ActionResult SecretPage()
-        {
-            return View(CurrentUser);
-        }
 
         public ActionResult SaveVotes()
         {
@@ -223,6 +218,15 @@ namespace MVC.Controllers
             CurrentCart = new Cart();
 
             return RedirectToAction("List");
+        }
+
+        [HttpPost]
+        public ActionResult AddComment(int characterID, string commentText)
+        {
+            var thread = commentThreadService.GetCommentThreadByCharacterID(characterID);
+            var comment = new Comment { DateTime = DateTime.Now, Text = commentText, User = CurrentUser };
+            commentThreadService.AddComment(thread, comment);
+            return View(new { characterId = characterID, comments = thread.Comments });
         }
     }
 }
