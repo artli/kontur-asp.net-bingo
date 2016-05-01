@@ -52,17 +52,20 @@ namespace MVC.Controllers
                     if (Security.VerifyPassword(userView.Password, user.PwdHash))
                     {
                         _authenticationService.Login(user, userView.IsPersistent);
+                        if (Request.IsAjaxRequest()) return View("LoginForm", userView);
                         return RedirectToAction("List", "Characters");
                     }
                 }
 
             }
+            if (Request.IsAjaxRequest()) return View("LoginForm", userView);
             return View(userView);
         }
 
         public ActionResult Logout()
         {
             _authenticationService.Logoff();
+            if (Request.IsAjaxRequest()) return View("LoginForm", null);
             return RedirectToAction("List", "Characters");
         }
 
@@ -70,7 +73,9 @@ namespace MVC.Controllers
         public ActionResult LoginForm()
         {
             var user = _authenticationService.CurrentUser;
-            return View(user);
+            UserViewModel userViewModel = user == null?null : new UserViewModel(user); 
+            
+            return View(userViewModel);
         }
 
         public ActionResult Register()

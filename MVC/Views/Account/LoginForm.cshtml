@@ -1,15 +1,40 @@
-﻿@model User
+﻿@model UserViewModel
 
 @{
+    var actionName = Model == null ? "Login" : "Logout";
+    var httpMethod = Model == null ? "POST" : "GET";
+    var ajaxOptions = new AjaxOptions()
+    {
+        HttpMethod = httpMethod,
+
+        UpdateTargetId = "login-form"
+    };
     Layout = null;
 }
-@if (Model == null)
+@using (Ajax.BeginForm("Login", null, ajaxOptions, new { @class = "navbar-form navbar-right" }))
 {
-    <li>@Html.ActionLink("Login", "Login", "Account")</li>
-    <li>@Html.ActionLink("Register", "Register", "Account")</li>
-}
-else
-{
-    <li><a>@Model.LoginName</a></li>
-    <li>@Html.ActionLink("Logout","Logout")</li>
+
+    
+    @*<div id="login-form">*@
+    <div class="form-group" id="login-form">
+        @Html.AntiForgeryToken()
+        @if (Model == null)
+        {
+            <div class="col-md-6">
+                @Html.EditorFor(m => m.Login, new {htmlAttributes = new {@class = "form-control input-sm", placeholder = "Login"}})
+            </div>
+            <div class="col-md-6">
+                @Html.EditorFor(m => m.Password, new {htmlAttributes = new {@class = "form-control input-sm", placeholder = "Password"}})
+            </div>
+        }
+        else
+        {
+            <a>@Model.Login</a>
+            @Ajax.ActionLink("Logout", "Logout", ajaxOptions)
+        }
+
+        <button type="submit" formaction="@actionName" formmethod="@httpMethod" style="display: none" class="btn btn-default">Submit</button>
+
+    </div>
+            @*</div>*@
 }
