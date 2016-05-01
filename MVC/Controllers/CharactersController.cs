@@ -221,12 +221,13 @@ namespace MVC.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddComment(int characterID, string commentText)
+        public ActionResult AddComment(int characterID, string comment)
         {
             var thread = commentThreadService.GetCommentThreadByCharacterID(characterID);
-            var comment = new Comment { DateTime = DateTime.Now, Text = commentText, User = CurrentUser };
-            commentThreadService.AddComment(thread, comment);
-            return View(new { characterId = characterID, comments = thread.Comments });
+            var commentInstance = new Comment { DateTime = DateTime.Now, Text = comment, User = CurrentUser };
+            commentThreadService.AddComment(thread, commentInstance);
+            var result = new { characterId = characterID, comments = thread.Comments.Select(_ => new { DateTime = _.DateTime.ToString(), UserName = _.User.LoginName, Text = _.Text }).ToList() };
+            return Json(result);
         }
     }
 }
