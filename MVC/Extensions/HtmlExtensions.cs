@@ -9,7 +9,7 @@ namespace MVC.Extensions
 {
     public static class HtmlExtensions
     {
-        public static IHtmlString EnumDropDownList<TEnum>(this HtmlHelper htmlHelper, String fieldName, String extraText, Object extraValue, Object htmlAttributes)
+        public static IHtmlString EnumDropDownList<TEnum>(this HtmlHelper htmlHelper, String fieldName,TEnum selectedValue, String extraText=null, Object extraValue=null, Object htmlAttributes=null)
         {
             IEnumerable<TEnum> values = Enum.GetValues(typeof(TEnum)).Cast<TEnum>();
 
@@ -19,9 +19,13 @@ namespace MVC.Extensions
                 {
                     Text = value.GetDescription(),
                     Value = value.ToString(),
+                    Selected = value.Equals(selectedValue)
                 };
             var list = items.ToList();
-            list.Insert(0, item: new SelectListItem { Text = extraText, Value = (string)extraValue, Selected = true });
+            if (!String.IsNullOrEmpty(extraText))
+            {
+                list.Insert(0, item: new SelectListItem { Text = extraText, Value = (string)extraValue, Selected = true }); 
+            }
             return htmlHelper.DropDownList(fieldName, list, htmlAttributes);
         }
     }

@@ -1,0 +1,7 @@
+﻿@model IEnumerable<int>
+@{
+    foreach (var price in Model)
+    {
+        <input type="radio" name="Price" value="@price"/> @price
+    }
+}

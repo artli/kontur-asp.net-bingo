@@ -21,5 +21,6 @@ namespace MVC.ViewModels
         public int Price { get; set; }
         [DataType(DataType.Upload)]
         public HttpPostedFileBase File { get; set; }
+        public IEnumerable<int> PriceList { get; set; }
     }
 }

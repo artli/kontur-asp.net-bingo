@@ -20,6 +20,7 @@ namespace MVC.Controllers
 
         private const string defaultFileName = "DefaultCharacterImage.jpg";
         private readonly static string imageDir = AppDomain.CurrentDomain.BaseDirectory + @"Content\img\";
+        private readonly static IEnumerable<int> _priceList  = new List<int>() {1,2,3};
         private static string SaveFileAndReturnFileName(HttpPostedFileBase file)
         {
             var guid = Guid.NewGuid().ToString();
@@ -54,7 +55,8 @@ namespace MVC.Controllers
         // GET: CharacterEdit/Create
         public ActionResult Create()
         {
-            return View();
+            
+            return View(new CharacterEditViewModel() {PriceList = _priceList});
         }
 
         // POST: CharacterEdit/Create
@@ -87,7 +89,7 @@ namespace MVC.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
+            viewModel.PriceList = _priceList;
             return View(viewModel);
         }
 
@@ -110,7 +112,8 @@ namespace MVC.Controllers
                 Name = character.Name,
                 Description = character.Description,
                 Gender = character.Gender,
-                Price = character.Price
+                Price = character.Price,
+                PriceList = _priceList
             };
             return View(viewModel);
         }
@@ -145,7 +148,7 @@ namespace MVC.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
+            viewModel.PriceList = _priceList;
             return View(viewModel);
         }
 
