@@ -1,11 +1,10 @@
 ﻿@model UserViewModel
 
 @{
-    ViewBag.Title = "title";
-
+    ViewBag.Title = "Login";
 }
 
-<h2>title</h2>
+<h2>Login</h2>
 @using (Html.BeginForm("Login", "Account", FormMethod.Post))
 {
     @Html.AntiForgeryToken()

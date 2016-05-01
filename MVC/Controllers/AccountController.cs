@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using MVC.Identity;
 using MVC.Infrastructure;
 using MVC.Models;
+using MVC.ViewModels;
 using MVC.Services;
 
 namespace MVC.Controllers
@@ -23,6 +24,7 @@ namespace MVC.Controllers
             this.cartProvider = cartProvider;
             this._authenticationService = authenticationService;
         }
+
         // GET: Account
         public ActionResult Login()
         {
@@ -63,6 +65,7 @@ namespace MVC.Controllers
             _authenticationService.Logoff();
             return RedirectToAction("List", "Characters");
         }
+
         [ChildActionOnly]
         public ActionResult LoginForm()
         {
@@ -70,20 +73,36 @@ namespace MVC.Controllers
             return View(user);
         }
 
-        public ActionResult TestUser(string username, string pwd)
+        public ActionResult Register()
+        {
+            if (_authenticationService.CurrentUser != null)
+            {
+                var user = userService.GetUserByUserID(_authenticationService.CurrentUser.UserID);
+                if ((user != null))
+                {
+                    return RedirectToAction("List", "Characters");
+                }
+
+            }
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Register(UserViewModel userView)
         {
             var user = new User()
             {
-                LoginName = username,
-                PwdHash = Security.GenerateHash(pwd),
+                LoginName = userView.Login,
+                PwdHash = Security.GenerateHash(userView.Password),
                 Role = UserRole.User,
                 Votes = new List<Vote>()
             };
             userService.CreateUser(user);
             userService.Commit();
-            return RedirectToAction("Login");
 
+            _authenticationService.Login(user, userView.IsPersistent);
+            return RedirectToAction("List", "Characters");
         }
-
     }
 }

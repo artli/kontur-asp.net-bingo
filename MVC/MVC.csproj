@@ -136,7 +136,7 @@
     <Compile Include="Controllers\CharacterEditController.cs" />
     <Compile Include="Controllers\CharactersController.cs" />
     <Compile Include="Extensions\ExtensionsMethods.cs" />
-    <Compile Include="Models\UserViewModel.cs" />
+    <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -225,6 +225,7 @@
     <Content Include="Views\CharacterEdit\Edit.cshtml" />
     <Content Include="Views\CharacterEdit\Index.cshtml" />
     <Content Include="Views\Account\LoginForm.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -7,8 +7,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MVC.Identity;
-using MVC.Models;
 using MVC.ViewModels;
+using MVC.Models;
 using System.Web.Security;
 
 namespace MVC.Controllers

@@ -6,10 +6,10 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using MVC.Models;
+using MVC.ViewModels;
 using MVC.Repositories;
 using MVC.Identity;
-using MVC.ViewModels;
+using MVC.Models;
 
 namespace MVC.Controllers
 {
