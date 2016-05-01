@@ -88,11 +88,11 @@ namespace MVC.Controllers
                 if (thread == null)
                 {
                     thread = commentThreadService.GetNewCommentThreadForCharacter(character);
-                    var admin = userService.GetUserByUserID(0);
-                    foreach (var comment in thread.Comments)
-                        comment.User = admin;
                     commentThreadService.Commit();
                 }
+                var admin = userService.GetUserByUserID(1);
+                foreach (var comment in thread.Comments)
+                    comment.User = admin;
             }
             return new CharacterViewModel { Character = character, State = GetCharacterState(character), CommentThread = thread };
         }

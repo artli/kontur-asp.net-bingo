@@ -8,7 +8,7 @@ using System.Web;
 
 namespace MVC.Infrastructure
 {
-    public class SeedData : DropCreateDatabaseAlways<BingoDbContext>
+    public class SeedData : DropCreateDatabaseIfModelChanges<BingoDbContext>
     {
         private static readonly List<Character> characters = new List<Character>
         {
@@ -49,7 +49,7 @@ namespace MVC.Infrastructure
         private static readonly List<User> users = new List<User> {
             new User
             {
-                UserID = 0,
+                UserID = 1,
                 LoginName = "admin",
                 PwdHash = Security.GenerateHash("1234"),
                 Role = UserRole.Admin
