@@ -98,7 +98,7 @@ namespace MVC.Controllers
 
             if (CurrentCart.ChosenCharacterIDs.Contains(character.CharacterID))
                 return true;
-
+            
             return false;
         }
 
