@@ -133,6 +133,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CharacterEditController.cs" />
     <Compile Include="Controllers\CharactersController.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Global.asax.cs">
@@ -163,6 +164,7 @@
     <Compile Include="Services\WeekProvider.cs" />
     <Compile Include="ViewModels\CharacterCardViewModel.cs" />
     <Compile Include="ViewModels\CartViewModel.cs" />
+    <Compile Include="ViewModels\CharacterEditViewModel.cs" />
     <Compile Include="ViewModels\CharacterState.cs" />
     <Compile Include="ViewModels\CharacterWithState.cs" />
     <Compile Include="Models\Gender.cs" />
@@ -216,6 +218,11 @@
     <Content Include="Views\Shared\_SearchForm.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Characters\SecretPage.cshtml" />
+    <Content Include="Views\CharacterEdit\Create.cshtml" />
+    <Content Include="Views\CharacterEdit\Delete.cshtml" />
+    <Content Include="Views\CharacterEdit\Details.cshtml" />
+    <Content Include="Views\CharacterEdit\Edit.cshtml" />
+    <Content Include="Views\CharacterEdit\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

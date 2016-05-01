@@ -8,7 +8,7 @@ using System.Web;
 
 namespace MVC.Infrastructure
 {
-    public class SeedData : DropCreateDatabaseAlways<BingoDbContext>
+    public class SeedData : DropCreateDatabaseIfModelChanges<BingoDbContext>
     {
         private readonly List<Character> characters = new List<Character>
         {
