@@ -17,7 +17,7 @@ namespace MVC.Extensions
                 from value in values
                 select new SelectListItem
                 {
-                    Text = value.ToString(),
+                    Text = value.GetDescription(),
                     Value = value.ToString(),
                 };
             var list = items.ToList();

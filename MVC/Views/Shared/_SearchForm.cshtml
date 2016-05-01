@@ -4,7 +4,7 @@
     @using (Html.BeginRouteForm("Show all characters"))
     {
         <p>
-            <b>Gender</b>: @(Html.EnumDropDownList<Gender>("gender", "Any", null, null))
+            <b>Gender</b>: @(Html.EnumDropDownList<Gender>("gender", "Любой", null, null))
 
             @*@Html.DropDownList("gender", new[] {
                 new SelectListItem { Text = "Any", Value = null, Selected = true },

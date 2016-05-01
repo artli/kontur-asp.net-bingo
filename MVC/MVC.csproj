@@ -135,6 +135,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CharacterEditController.cs" />
     <Compile Include="Controllers\CharactersController.cs" />
+    <Compile Include="Extensions\ExtensionsMethods.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
