@@ -12,7 +12,7 @@ namespace MVC.Repositories
     {
         #region Properties
         private BingoDbContext dataContext;
-        private readonly IDbSet<T> dbSet;
+        protected readonly IDbSet<T> dbSet;
 
         protected IDbFactory DbFactory
         {
@@ -71,7 +71,7 @@ namespace MVC.Repositories
             return dbSet.Where(where).ToList();
         }
 
-        public T Get(Expression<Func<T, bool>> where)
+        public virtual T Get(Expression<Func<T, bool>> where)
         {
             return dbSet.Where(where).FirstOrDefault<T>();
         }
