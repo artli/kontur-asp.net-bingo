@@ -223,6 +223,7 @@
     <Content Include="Views\CharacterEdit\Details.cshtml" />
     <Content Include="Views\CharacterEdit\Edit.cshtml" />
     <Content Include="Views\CharacterEdit\Index.cshtml" />
+    <Content Include="Views\Account\LoginForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

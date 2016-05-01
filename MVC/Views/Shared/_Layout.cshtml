@@ -22,8 +22,11 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.RouteLink("Character list", "Show all characters")</li>
-                    <li>@Html.ActionLink("Male characters", "List", "Characters", new { gender = "Male" }, null)</li>
-                    <li>@Html.ActionLink("Female characters", "List", "Characters", new { gender = "Female" }, null)</li>
+                    <li>@Html.ActionLink("Male characters", "List", "Characters", new {gender = "Male"}, null)</li>
+                    <li>@Html.ActionLink("Female characters", "List", "Characters", new {gender = "Female"}, null)</li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    @Html.Action("LoginForm","Account")
                 </ul>
             </div>
         </div>
@@ -31,7 +34,7 @@
     <div class="container body-content">
         @RenderBody()
     </div>
-
+    
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
