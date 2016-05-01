@@ -41,7 +41,7 @@
         </div>
         @if (Model.CharacterViewModel.CommentThread != null)
         {
-            <div class="comments@(Model.CharacterViewModel.Character.CharacterID)">
+            <div class="comments" id ="comments@(Model.CharacterViewModel.Character.CharacterID)">
                 <p><b>Discussion:</b></p>
                 @Html.Partial("_CommentThread", Model.CharacterViewModel.CommentThread)
             </div>

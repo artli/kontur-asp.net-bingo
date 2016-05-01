@@ -25,13 +25,16 @@
                 method:"POST",
                 success: function (data,textStatus) {
                     if (data.characterId && data.comments) {
-                        $('comments' + data.characterId).empty();
-                        $.each(data.comments, function(i, val) {
-                            $('comments' + data.characterId).append("<p>[" + val.DateTime + "] <b>" + val.UserName+ "</b> says: " + val.Text + "</p>");
-                        });
+                        var comments = $('#comments' + data.characterId);
+                        comments.empty();
+                        for (var i = 0 ; i < data.comments.length; i++) {
+                            var val = data.comments[i];
+                            comments.append("<p>[" + val.DateTime + "] <b>" + val.UserName+ "</b> says: " + val.Text + "</p>");
+                        }
                     }
                 }
             });
+            $('#comment' + characterId).val("");
         }
     </script>
 }
